@@ -62,11 +62,15 @@ All data:
 Single category data:
 
 [http://localhost:8000/category/1/book/items.json](http://localhost:8000/category/1/book/items.json)
+
 [http://localhost:8000/category/2/movie/items.json](http://localhost:8000/category/2/movie/items.json)
+
 [http://localhost:8000/category/3/tv-series/items.json](http://localhost:8000/category/3/tv-series/items.json)
+
 [http://localhost:8000/category/4/album/items.json](http://localhost:8000/category/4/album/items.json)
 
 Single item data:
 
 [http://localhost:8000/category/1/book/1.json](http://localhost:8000/category/1/book/1.json)
+
 [http://localhost:8000/category/2/movie/4.json](http://localhost:8000/category/2/movie/4.json)
