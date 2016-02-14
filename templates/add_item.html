@@ -1,0 +1,49 @@
+{% extends "main.html" %}
+{% block content %}
+
+  <div class="row padding-top padding-bottom">
+    <div class="col-sm-3">
+      {% include "sidebar.html" %}
+    </div>
+    <div class="col-sm-9">
+      <h1 class="col-sm-offset-2">New Item</h1>
+      <form class="form-horizontal" role="form" method=POST enctype=multipart/form-data>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="category_id">Category:</label>
+          <div class="col-sm-7">
+            <select class="form-control" name="category_id">
+            {% for category in categories %}
+              <option value="{{category.id}}"> {{category.name}}</option>
+            {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="name">Name:</label>
+          <div class="col-sm-7">
+            <input class="form-control" type="text" maxlength="80" name="name" placeholder="Name of the item">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="description">Description:</label>
+          <div class="col-sm-7">
+            <textarea class="form-control" maxlength="500" rows="5" name="description" placeholder="Description of the item"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="picture">Picture:</label>
+          <div class="col-sm-7">
+            <input class="form-control" type="file" name="picture">
+            <p> Allowed extensions:  (png, jpg, jpeg)</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Add</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+

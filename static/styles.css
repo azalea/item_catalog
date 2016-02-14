@@ -1,0 +1,78 @@
+header {
+    background-color: #382513;
+}
+
+header .top-menu a {
+    height: 40px;
+    line-height: 40px;
+    font-family: "Helvetica Neue Bold", Helvetica, Arial, sans-serif;
+    font-size: 22px;
+    color: #5C832F;
+}
+
+.glyphicon {
+    margin-right: 5px;
+}
+
+div .flash {
+    /* -webkit-animation: seconds 1.0s forwards; */
+    /* -webkit-animation-iteration-count: 1; */
+    /* -webkit-animation-delay: 4s; */
+    /* animation: seconds 1.0s forwards; */
+    /* animation-iteration-count: 1; */
+    /* animation-delay: 4s; */
+    position: relative;
+    background: #5C832F;
+}
+
+div .item-image img {
+    margin: 3px 12px 0 0;
+    width: 25%;
+    height: auto;
+    float: left;
+}
+
+div .item-description {
+    overflow: hidden; /* no wrap */
+}
+
+h1 {
+    font-family: "Helvetica Neue Bold", Helvetica, Arial, sans-serif;
+    font-size: 22px;
+    color: #284907;
+    line-height: 27px;
+}
+
+h3 {
+    font-family: "Helvetica Neue Bold", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    color: #284907;
+    line-height: 23px;
+}
+
+h3 a {
+    font-family: "Helvetica Neue Bold", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    color: #5C832F;
+    line-height: 23px;
+}
+
+p a, label {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    color: #5C832F;
+    line-height: 18px;
+    font-weight: 400;
+}
+
+p, a {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    color: #5C832F;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+.action a {
+    color: #363942;
+}

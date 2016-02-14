@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="row top-menu">
+          <div class="col-xs-6">
+            <a href="{{url_for('show_homepage')}}">
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Catalog App
+            </a>
+          </div>
+          <div class="col-xs text-right">
+            {% if 'user_id' not in session %}
+            <a href="{{ url_for('login') }}">Log in</a>
+            {% else %}
+            <a href="{{ url_for('logout') }}">Log out</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <div class="flash">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li class="flash"> <strong> {{ message }} </strong> </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+      </div>
+      {% block content %}
+      {% endblock %}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  </body>
+</html>

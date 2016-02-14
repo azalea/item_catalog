@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+{% block content %}
+
+  <div class="row padding-top padding-bottom">
+    <div class="col-sm-3">
+      {% include "sidebar.html" %}
+    </div>
+    <div class="col-sm-9">
+      <h1>Delete Item</h1>
+      <form role="form" method="POST">
+        <p>Are you sure you want to delete {{item.name}}?</p>
+        <input type="submit" value="Delete">
+        <a href="{{url_for('show_item', category_id=item.category_id, slug=item.category.slug, item_id=item.id, item_slug=item.slug)}}">Cancel</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
