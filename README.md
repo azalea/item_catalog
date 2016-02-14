@@ -8,15 +8,15 @@ This project is developed with HTML, CSS and javascript in the front end, and Py
 
 ## Installation
 
-1. Install Vagrant and VirtualBox.
+#### Install Vagrant and VirtualBox.
 
-2. Clone the [fullstack-nanodegree-vm](https://github.com/udacity/fullstack-nanodegree-vm) repository.
+#### Clone the [fullstack-nanodegree-vm](https://github.com/udacity/fullstack-nanodegree-vm) repository.
 
-3. Download this repository
+#### Download this repository
 
 Click either "Clone in Desktop" or "Download ZIP" to the right, and move the repository to fullstack-nanodegree-vm/vagrant folder (Step 2).
 
-4. Setup the database
+#### Setup the database
 ```
     # In the terminal:
     # Go to the downloaded repository folder.
@@ -26,7 +26,7 @@ Click either "Clone in Desktop" or "Download ZIP" to the right, and move the rep
 ```
 It should print "Database is successfully setup and populated."
 
-5. Run the application
+#### Run the application
 ```
     # In the terminal:
     # Launch and connect to the Vagrant VM
@@ -36,22 +36,22 @@ It should print "Database is successfully setup and populated."
     cd /vagrant/item_catalog
     python application.py
 ```
-6. Access the application
+#### Access the application
 
 Visit [http://localhost:8000](http://localhost:8000)
 
 ## Features
 
-1. CRUD functionalities
+#### CRUD functionalities
 
 Straightforward interface for user to create, read, update or delete items.
 It fully supports uploading, changing and displaying an item image.
 
-2. Authentication and authorization
+#### Authentication and authorization
 
 Support third-party (Google and Facebook) log-in. Only authenticated user is able to create, edit or delete items. Unauthenticated user can view the items. User can only edit or delete his/her own items.
 
-3. API
+#### API
 
 User can access all the data through JSON endpoints.
 
