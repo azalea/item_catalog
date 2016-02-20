@@ -97,3 +97,9 @@ Single item data:
 [http://localhost:8000/category/1/book/1.json](http://localhost:8000/category/1/book/1.json)
 
 [http://localhost:8000/category/2/movie/4.json](http://localhost:8000/category/2/movie/4.json)
+
+##### Atom Feed
+
+Atom feed can be accessed at:
+
+[http://localhost:8000/recent.atom](http://localhost:8000/recent.atom)

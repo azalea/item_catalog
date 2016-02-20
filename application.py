@@ -1,3 +1,4 @@
+import datetime
 import random
 import string
 import httplib2
@@ -11,6 +12,8 @@ from flask import url_for, flash, jsonify, send_from_directory
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 from werkzeug import secure_filename
+from urlparse import urljoin
+from werkzeug.contrib.atom import AtomFeed
 
 from jinja2 import evalcontextfilter, Markup, escape
 
@@ -175,6 +178,28 @@ def delete_item(category_id, slug, item_id, item_slug=None):
     else:
         return render_template('delete_item.html',
                                category_id=category_id, item=item)
+
+
+def make_external(url):
+    return urljoin(request.url_root, url)
+
+
+@app.route('/recent.atom')
+def recent_feed():
+    feed = AtomFeed('Recent Items',
+                    feed_url=request.url, url=request.url_root)
+    items = dbo.get_latest_items()
+    for item in items:
+        feed.add(item.name, item.description,
+                 content_type='html',
+                 author=item.user.name,
+                 url=make_external(url_for(
+                     'show_item', category_id=item.category_id,
+                     slug=item.category.slug,
+                     item_id=item.id)),
+                 updated=datetime.datetime.now(),
+                 )
+    return feed.get_response()
 
 
 @app.route('/catalog.json')
