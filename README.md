@@ -26,6 +26,29 @@ Click either "Clone in Desktop" or "Download ZIP" to the right, and move the rep
 ```
 It should print "Database is successfully setup and populated."
 
+##### Check dependencies
+
+This application depends on specific versions of the following packages:
+
+SQLAlchemy should be >= 1.0.0
+
+Werkzeug == 0.8.3
+
+Flask == 0.9
+
+```
+    # In the terminal:
+    # Launch and connect to the Vagrant VM
+    vagrant up
+    vagrant ssh
+    # Check whether the following packages have the correct versions
+    pip show sqlalchemy
+    pip show werkzeug
+    pip show flask
+    # if not, uninstall current version and install specific version
+    # https://pip.readthedocs.org/en/1.1/usage.html#install-packages
+```
+
 ##### Run the application
 ```
     # In the terminal:
