@@ -48,6 +48,13 @@ def as_paragraph(eval_ctx, value):
     return result
 
 
+def get_csrf_token():
+    '''Generate a random alphanumeric string to serve as an identifier
+    to protect against cross-site request forgery (csrf).'''
+    return ''.join(random.choice(string.ascii_uppercase + string.digits)
+                   for x in range(32))
+
+
 @app.route('/uploads/<path:filename>')
 def send_uploads(filename):
     '''Serve files in uploads folder'''
@@ -165,6 +172,13 @@ def delete_item(category_id, slug, item_id, item_slug=None):
             item_slug=item.slug))
 
     if request.method == 'POST':
+        # Make sure csrf_token matches,
+        # to protect against cross-site request forgery
+        if request.form['csrf_token'] != login_session['csrf_token']:
+            response = make_response(json.dumps('Invalid csrf token'), 401)
+            response.headers['Content-Type'] = 'application/json'
+            return response
+
         if item.picture:
             original_filepath = os.path.join(
                 app.config['UPLOAD_FOLDER'], item.picture)
@@ -176,16 +190,26 @@ def delete_item(category_id, slug, item_id, item_slug=None):
         return redirect(url_for(
             'show_category', category_id=category_id, slug=slug))
     else:
+        # Generate csrf_token, and pass it to html form,
+        # to protect against cross-site request forgery
+        csrf_token = get_csrf_token()
+        login_session['csrf_token'] = csrf_token
         return render_template('delete_item.html',
-                               category_id=category_id, item=item)
+                               category_id=category_id,
+                               item=item,
+                               csrf_token=csrf_token)
 
 
-def make_external(url):
+def _make_external(url):
+    '''Make a reletive url as external.
+    ref: http://flask.pocoo.org/snippets/10/'''
     return urljoin(request.url_root, url)
 
 
 @app.route('/recent.atom')
-def recent_feed():
+def show_recent_feed():
+    '''Create Atom feed.
+    ref: http://flask.pocoo.org/snippets/10/'''
     feed = AtomFeed('Recent Items',
                     feed_url=request.url, url=request.url_root)
     items = dbo.get_latest_items()
@@ -193,7 +217,7 @@ def recent_feed():
         feed.add(item.name, item.description,
                  content_type='html',
                  author=item.user.name,
-                 url=make_external(url_for(
+                 url=_make_external(url_for(
                      'show_item', category_id=item.category_id,
                      slug=item.category.slug,
                      item_id=item.id)),
@@ -223,8 +247,7 @@ def show_item_json(category_id, slug, item_id, item_slug=None):
 
 @app.route('/login')
 def login():
-    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-                    for x in range(32))
+    state = get_csrf_token()
     login_session['state'] = state
     return render_template('login.html', state=state)
 
