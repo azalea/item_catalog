@@ -6,13 +6,15 @@ import re
 import os
 import uuid
 import requests
-from flask import Flask, make_response, render_template, request, redirect, url_for, flash, jsonify, send_from_directory
+from flask import Flask, make_response, render_template, request, redirect
+from flask import url_for, flash, jsonify, send_from_directory
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 from werkzeug import secure_filename
 
 from jinja2 import evalcontextfilter, Markup, escape
 
+from utils import login_required
 import database_operation as dbo
 
 client_id = json.loads(open('client_secrets.json').read())['web']['client_id']
@@ -78,10 +80,8 @@ def _allowed_file(filename):
 
 
 @app.route('/item/new', methods=['GET', 'POST'])
+@login_required
 def add_item():
-    if login_session.get('user_id') is None:
-        flash('Please log in to add new item.')
-        return redirect(url_for('show_homepage'))
     if request.method == 'POST':
         picture_file = request.files['picture']
         if picture_file and _allowed_file(picture_file.filename):
@@ -103,13 +103,20 @@ def add_item():
         return render_template('add_item.html')
 
 
-@app.route('/category/<int:category_id>/<slug>/item/<int:item_id>/edit', methods=['GET', 'POST'])
-@app.route('/category/<int:category_id>/<slug>/item/<int:item_id>/<item_slug>/edit', methods=['GET', 'POST'])
+@app.route(
+    '/category/<int:category_id>/<slug>/item/<int:item_id>/edit',
+    methods=['GET', 'POST'])
+@app.route(
+    '/category/<int:category_id>/<slug>/item/<int:item_id>/<item_slug>/edit',
+    methods=['GET', 'POST'])
+@login_required
 def edit_item(category_id, slug, item_id, item_slug=None):
     item = dbo.get_item(category_id, item_id)
     if login_session.get('user_id') != item.user_id:
         flash('Sorry you cannot edit item created by another user.')
-        return redirect(url_for('show_item', category_id=item.category_id, slug=item.category.slug, item_id=item_id, item_slug=item.slug))
+        return redirect(url_for(
+            'show_item', category_id=item.category_id,
+            slug=item.category.slug, item_id=item_id, item_slug=item.slug))
     if request.method == 'POST':
         picture_file = request.files['picture']
         if picture_file and _allowed_file(picture_file.filename):
@@ -129,18 +136,30 @@ def edit_item(category_id, slug, item_id, item_slug=None):
         edited_item = dbo.edit_item(
             item_id, category_id, name, description, filename)
         flash('Item %s is successfully edited.' % edited_item.name)
-        return redirect(url_for('show_item', category_id=edited_item.category_id, slug=edited_item.category.slug, item_id=edited_item.id, item_slug=edited_item.slug))
+        return redirect(url_for(
+            'show_item', category_id=edited_item.category_id,
+            slug=edited_item.category.slug, item_id=edited_item.id,
+            item_slug=edited_item.slug))
     else:
-        return render_template('edit_item.html', category_id=category_id, item=item)
+        return render_template(
+            'edit_item.html', category_id=category_id, item=item)
 
 
-@app.route('/category/<int:category_id>/<slug>/item/<int:item_id>/delete', methods=['GET', 'POST'])
-@app.route('/category/<int:category_id>/<slug>/item/<int:item_id>/<item_slug>/delete', methods=['GET', 'POST'])
+@app.route(
+    '/category/<int:category_id>/<slug>/item/<int:item_id>/delete',
+    methods=['GET', 'POST'])
+@app.route(
+    '/category/<int:category_id>/<slug>/item/<int:item_id>/<item_slug>/delete',
+    methods=['GET', 'POST'])
+@login_required
 def delete_item(category_id, slug, item_id, item_slug=None):
     item = dbo.get_item(category_id, item_id)
     if login_session.get('user_id') != item.user_id:
         flash('Sorry you cannot delete item created by another user.')
-        return redirect(url_for('show_item', category_id=item.category_id, slug=item.category.slug, item_id=item_id, item_slug=item.slug))
+        return redirect(url_for(
+            'show_item', category_id=item.category_id,
+            slug=item.category.slug, item_id=item_id,
+            item_slug=item.slug))
 
     if request.method == 'POST':
         if item.picture:
@@ -151,7 +170,8 @@ def delete_item(category_id, slug, item_id, item_slug=None):
         slug = item.category.slug
         dbo.delete_item(category_id, item_id)
         flash('Item %s is successfully deleted.' % name)
-        return redirect(url_for('show_category', category_id=category_id, slug=slug))
+        return redirect(url_for(
+            'show_category', category_id=category_id, slug=slug))
     else:
         return render_template('delete_item.html',
                                category_id=category_id, item=item)
@@ -195,18 +215,22 @@ def fbconnect():
     secret_data = json.loads(open('fb_client_secrets.json', 'r').read())
     app_id = secret_data['web']['app_id']
     app_secret = secret_data['web']['app_secret']
-    url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id={0}&client_secret={1}&fb_exchange_token={2}'.format(
+    url = 'https://graph.facebook.com/oauth/access_token?'
+    url += 'grant_type=fb_exchange_token'
+    url += '&client_id={0}&client_secret={1}&fb_exchange_token={2}'.format(
         app_id, app_secret, access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     # Strip expire tag from access_token
     token = result.split('&')[0]
 
-    url = 'https://graph.facebook.com/v2.5/me?{0}&fields=name,id,email,picture'.format(
+    url = 'https://graph.facebook.com/v2.5/me?'
+    url += '{0}&fields=name,id,email,picture'.format(
         token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     data = json.loads(result)
+    print 'ddddddaata', data
     login_session['provider'] = 'facebook'
     login_session['username'] = data['name']
     login_session['email'] = data['email']
@@ -308,7 +332,9 @@ def _get_welcome_message():
     '''Helper function to specify the welcome message'''
     output = '<h1> Welcome, {username}!</h1>'.format(
         username=login_session['username'])
-    output += '<img src = "{picture}" style = "width: 300px; height: 300px; border - radius: 150px;-webkit - border - radius: 150px; -moz - border - radius: 150px; ">'.format(
+    output += '<img src = "{picture}" style = "width: 300px; height: 300px;'
+    output += 'border - radius: 150px;-webkit - border - radius: 150px;'
+    output += '-moz - border - radius: 150px; ">'.format(
         picture=login_session['picture'])
     return output
 
