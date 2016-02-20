@@ -1,0 +1,124 @@
+{
+  "Category": [
+    {
+      "items": [
+        {
+          "picture": "item1.jpg",
+          "user_id": 1,
+          "description": "Peter Thiel, 2014",
+          "category_id": 1,
+          "id": 1,
+          "name": "Zero to One: Notes on Startups, or How to Build the Future"
+        },
+        {
+          "picture": "item2.jpg",
+          "user_id": 1,
+          "description": "Ben Horowitz, 2014",
+          "category_id": 1,
+          "id": 2,
+          "name": "The Hard Thing About Hard Things: Building a Business When There Are No Easy Answers"
+        },
+        {
+          "picture": "item3.jpg",
+          "user_id": 1,
+          "description": "Martin Fowler, 2002",
+          "category_id": 1,
+          "id": 3,
+          "name": "Patterns of Enterprise Application Architecture"
+        }
+      ],
+      "id": 1,
+      "name": "Book"
+    },
+    {
+      "items": [
+        {
+          "picture": "item4.jpg",
+          "user_id": 1,
+          "description": "Ridley Scott, 2015\nDuring a manned mission to Mars, Astronaut Mark Watney is presumed dead after a fierce storm and left behind by his crew. But Watney has survived and finds himself stranded and alone on the hostile planet. With only meager supplies, he must draw upon his ingenuity, wit and spirit to subsist and find a way to signal to Earth that he is alive.",
+          "category_id": 2,
+          "id": 4,
+          "name": "The Martian"
+        },
+        {
+          "picture": "item5.jpg",
+          "user_id": 1,
+          "description": "J.J. Abrams, 2015\nThree decades after the defeat of the Galactic Empire, a new threat arises. The First Order attempts to rule the galaxy and only a ragtag group of heroes can stop them, along with the help of the Resistance.",
+          "category_id": 2,
+          "id": 5,
+          "name": "Star Wars: The Force Awakens"
+        },
+        {
+          "picture": "item6.jpg",
+          "user_id": 1,
+          "description": "Pete Docter, Ronnie Del Carmen, 2015\nAfter young Riley is uprooted from her Midwest life and moved to San Francisco, her emotions - Joy, Fear, Anger, Disgust and Sadness - conflict on how best to navigate a new city, house, and school.",
+          "category_id": 2,
+          "id": 6,
+          "name": "Inside Out"
+        }
+      ],
+      "id": 2,
+      "name": "Movie"
+    },
+    {
+      "items": [
+        {
+          "picture": "item7.jpg",
+          "user_id": 1,
+          "description": "HBO, 2014- \nIn the high-tech gold rush of modern Silicon Valley, the people most qualified to succeed are the least capable of handling success. A comedy partially inspired by Mike Judge's own experiences as a Silicon Valley engineer in the late 1980s.",
+          "category_id": 3,
+          "id": 7,
+          "name": "Silicon Valley"
+        },
+        {
+          "picture": "item8.jpg",
+          "user_id": 1,
+          "description": "SHO, 2006-2013.\nA Miami police forensics expert moonlights as a serial killer of criminals whom he believes have escaped justice.",
+          "category_id": 3,
+          "id": 8,
+          "name": "Dexter"
+        },
+        {
+          "picture": "item9.jpg",
+          "user_id": 1,
+          "description": "AMC, 2008-2013\nA chemistry teacher diagnosed with terminal lung cancer teams up with his former student to cook and sell crystal meth.",
+          "category_id": 3,
+          "id": 9,
+          "name": "Breaking Bad"
+        }
+      ],
+      "id": 3,
+      "name": "TV series"
+    },
+    {
+      "items": [
+        {
+          "picture": "item10.jpg",
+          "user_id": 1,
+          "description": "Pynk Floyd, 1973",
+          "category_id": 4,
+          "id": 10,
+          "name": "The Dark Side of the Moon"
+        },
+        {
+          "picture": "item11.jpg",
+          "user_id": 1,
+          "description": "The Rolling Stones, 1969",
+          "category_id": 4,
+          "id": 11,
+          "name": "Let It Bleed"
+        },
+        {
+          "picture": "item12.jpg",
+          "user_id": 1,
+          "description": "The Beatles, 1967",
+          "category_id": 4,
+          "id": 12,
+          "name": "Sgt. Pepper's Lonely Hearts Club Band"
+        }
+      ],
+      "id": 4,
+      "name": "Album"
+    }
+  ]
+}
