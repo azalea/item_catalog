@@ -31,7 +31,6 @@ class Category(Base):
         return {
             'id': self.id,
             'name': self.name,
-            'slug': self.slug,
             'items': [item.serialize for item in self.items]
         }
 
@@ -57,9 +56,10 @@ class Item(Base):
         return {
             'id': self.id,
             'name': self.name,
-            'slug': self.slug,
             'description': self.description,
             'picture': self.picture,
+            'category_id': self.category_id,
+            'user_id': self.user_id,
         }
 
 
